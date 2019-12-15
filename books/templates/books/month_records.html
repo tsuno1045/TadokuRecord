@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+  <style>
+    table {
+      table-layout: fixed;
+    }
+
+    td > div {
+      height: 10rem;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  </style>
+  <a href="{% url 'month_records' year=month_previous.year month=month_previous.month %}">前月</a>
+  {{ month_current | date:"Y年m月" }}
+  <a href="{% url 'month_records' year=month_next.year month=month_next.month %}">次月</a>
+
+  <table class="table">
+    <thead>
+    <tr>
+      {% for w in week_names %}
+        <th>{{ w }}</th>
+      {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for week_day_records in month_day_records %}
+      <tr>
+        {% for day, records in week_day_records.items %}
+          {% if now == day %}
+            <td class="table-success">
+              {% else %}
+            <td>
+          {% endif %}
+
+        <div>
+          {% if month_current.month != day.month %}
+            <a href="{% url 'day_records' year=day.year month=day.month day=day.day %}">{{ day | date:"m/d" }}<br></a>
+          {% else %}
+            <a href="{% url 'day_records' year=day.year month=day.month day=day.day %}">{{ day.day }}<br></a>
+          {% endif %}
+          {% for record in records %}
+            {% if record.date_page_count %}
+              <h6>{{ record.date_page_count }} pages</h6>
+            {% endif %}
+            {% if record.date_word_count %}
+              <h6>{{ record.date_word_count }} words</h6>
+            {% endif %}
+            {% if record.book.pk %}
+              <a href="{% url 'book_detail' pk=record.book.pk %}">{{ record.book.title }}<br></a>
+            {% endif %}
+            {% if record.read_page_count %}
+              {{ record.read_page_count }} pages<br>
+            {% endif %}
+            {% if record.read_word_count %}
+              {{ record.read_word_count }} words<br>
+            {% endif %}
+          {% endfor %}
+        </div>
+        </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <p><a href="{% url 'book_with_record_new' %}">New Book and Record</a></p>
+  <br>
+  <p>total page count of this month: {{ month_page_count }}</p>
+  <p>total word count of this month: {{ month_word_count }}</p>
+  <br>
+  <p>total page count so far: {{ total_page_count }}</p>
+  <p>total word count so far: {{ total_word_count }}</p>
+{% endblock %}

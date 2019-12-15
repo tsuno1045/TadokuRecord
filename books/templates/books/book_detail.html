@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div>
+    <h3>title: {{ book.title }}</h3>
+    <p>author: <a href="{% url 'author_book_list' author=book.author %}">{{ book.author }}</a></p>
+    <p>category: <a href="{% url 'category_book_list' category=book.category %}">{{ book.category }}</a></p>
+    <p>page count: {{ book.page_count }}</p>
+    <p>word count: {{ book.word_count }}</p>
+    <p><a href="{% url 'book_edit' pk=book.pk %}">Edit</a></p>
+    <p><a href="{% url 'book_delete' pk=book.pk %}">Delete</a></p>
+    <br>
+  </div>
+  <br>
+  <h2>Record</h2>
+  <p><a href="{% url 'record_new' pk=book.pk %}">New Record</a></p>
+  {% for record in book.reading_record.all %}
+    <div>
+      <p>start: {{ record.start_date }}</p>
+      <p>finish: {{ record.finish_date }}</p>
+      <p>{% if record.read_page_count %}
+        <p>{{ record.read_page_count }} pages&nbsp;
+      {% endif %}
+      {% if record.read_word_count %}
+        {{ record.read_word_count }} words
+      {% endif %}</p>
+      <p>memo: {{ record.memo }}</p>
+      <p>finish_flag: {{ record.finish_flag }}</p>
+      <p><a href="{% url 'record_edit' pk=book.pk record_pk=record.pk %}">Edit</a></p>
+      <p><a href="{% url 'record_delete' pk=book.pk record_pk=record.pk %}">Delete</a></p>
+      <br>
+    </div>
+  {% endfor %}
+{% endblock content %}
