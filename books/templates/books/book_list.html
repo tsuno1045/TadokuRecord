@@ -4,26 +4,27 @@
   <br>
   <p><a href="{% url 'book_new' %}">New Book</a></p>
   <p><a href="{% url 'book_with_record_new' %}">New Book and Record</a></p>
+  <div>
   {% for book in books %}
-    <div>
-      <p>title: <a href="{% url 'book_detail' pk=book.pk %}">{{ book.title }}</a></p>
-      <p>author: <a href="{% url 'author_book_list' author=book.author %}">{{ book.author }}</a></p>
-      <p>category: <a href="{% url 'category_book_list' category=book.category %}">{{ book.category }}</a></p>
-      
-    </div>
-    {% for record in book.reading_record.all %}
+    <div class="card">
       <div>
-        {% if record.start_date and record.finish_date %}
-          <p>{{ record.start_date }} ~ {{ record.finish_date }}</p>
-        {% elif record.start_date %}
-          <p>{{ record.start_date }} ~ ?</p>
-        {% elif record.finish_date %}
-          <p>? ~ {{ record.finish_date }}</p>
-        {% else %}
-          <p>No Date</p>
-        {% endif %}
+        <p>title: <a href="{% url 'book_detail' pk=book.pk %}">{{ book.title }}</a></p>
+        <p>author: <a href="{% url 'author_book_list' author=book.author %}">{{ book.author }}</a></p>
+        <p>category: <a href="{% url 'category_book_list' category=book.category %}">{{ book.category }}</a></p>
       </div>
-    {% endfor %}
-    <br>
+      {% for record in book.reading_record.all %}
+        <div>
+          {% if record.start_date and record.finish_date %}
+            <p>{{ record.start_date }} ~ {{ record.finish_date }}</p>
+          {% elif record.start_date %}
+            <p>{{ record.start_date }} ~ ?</p>
+          {% elif record.finish_date %}
+            <p>? ~ {{ record.finish_date }}</p>
+          {% else %}
+            <p>No Date</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
   {% endfor %}
 {% endblock content %}

@@ -5,13 +5,14 @@
   <h3>author: {{ author }}</h3>
   <br>
   {% for book in books %}
-    <p>title: <a href="{% url 'book_detail' pk=book.pk %}">{{ book.title }}</a></p>
-    {% if book.page_count %}
-      {{ book.page_count }} pages<br>
-    {% endif %}
-    {% if book.word_count %}
-      {{ book.word_count }} words<br>
-    {% endif %}
-    <br>
+    <div class="card">
+      <p>title: <a href="{% url 'book_detail' pk=book.pk %}">{{ book.title }}</a></p>
+      {% if book.page_count %}
+        {{ book.page_count }} pages<br>
+      {% endif %}
+      {% if book.word_count %}
+        {{ book.word_count }} words<br>
+      {% endif %}
+    </div>
   {% endfor %}
 {% endblock content %}
