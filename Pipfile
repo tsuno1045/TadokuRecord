@@ -8,7 +8,6 @@ verify_ssl = true
 [packages]
 django = "*"
 django-bootstrap-datepicker-plus = "*"
-whitenoise = "*"
 
 [requires]
 python_version = "3.7"
