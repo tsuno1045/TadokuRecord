@@ -1,1 +1,1 @@
-web: gunicorn tadoku_record.wsgi --log-gile -
+web: gunicorn tadoku_record.wsgi --log-file -
